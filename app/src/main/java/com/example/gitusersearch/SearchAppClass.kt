@@ -1,4 +1,4 @@
-package com.example.gitusersearch.ui.activities
+package com.example.gitusersearch
 
 import android.app.Application
 
