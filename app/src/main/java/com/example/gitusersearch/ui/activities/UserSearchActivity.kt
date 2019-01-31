@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.provider.SearchRecentSuggestions
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gitusersearch.ContentProviders.MySuggestionProvider
 import com.example.gitusersearch.R
@@ -43,6 +45,15 @@ class UserSearchActivity : AppCompatActivity() {
     private fun initMembers() {
         rvRepositories.adapter = rvRepositoryAdapter
         rvRepositories.layoutManager = layoutManager
+
+        searchViewModel.repositoriesLiveData.observe(this, Observer {repositoryList ->
+            run {
+                if (repositoryList != null)
+                    rvRepositoryAdapter.setData(repositoryList)
+                else
+                    Toast.makeText(this, " Either there is not user/ user has no repositories", Toast.LENGTH_LONG).show()
+            }
+        } )
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -50,8 +61,8 @@ class UserSearchActivity : AppCompatActivity() {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
                 SearchRecentSuggestions(this, MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE)
                     .saveRecentQuery(query, null)
+                searchViewModel.performUserSearch(query = query)
             }
-
         }
         super.onNewIntent(intent)
     }
