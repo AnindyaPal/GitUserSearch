@@ -1,6 +1,7 @@
-package com.example.gitusersearch.di
+package com.example.gitusersearch.di.application
 
 import com.example.gitusersearch.Constants
+import com.example.gitusersearch.di.GitHubAppScope
 import com.example.gitusersearch.repository.GithubRepo
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

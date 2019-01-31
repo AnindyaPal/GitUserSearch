@@ -1,9 +1,9 @@
 package com.example.gitusersearch
 
 import android.app.Application
-import com.example.gitusersearch.di.ApiRepositoryModule
-import com.example.gitusersearch.di.AppComponent
-import com.example.gitusersearch.di.DaggerAppComponent
+import com.example.gitusersearch.di.application.ApiRepositoryModule
+import com.example.gitusersearch.di.application.AppComponent
+import com.example.gitusersearch.di.application.DaggerAppComponent
 
 class SearchAppClass : Application() {
 
@@ -13,7 +13,7 @@ class SearchAppClass : Application() {
             return APP_INSTANCE
         }
     }
-    var appComponent : AppComponent ?= null
+    var appComponent : AppComponent?= null
     override fun onCreate() {
         super.onCreate()
 

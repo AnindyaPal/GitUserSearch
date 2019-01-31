@@ -1,7 +1,8 @@
-package com.example.gitusersearch.di
+package com.example.gitusersearch.di.activity
 
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gitusersearch.di.GitHubAppScope
 import com.example.gitusersearch.ui.activities.UserSearchActivity
 import com.example.gitusersearch.ui.adapters.RvRepositoryAdapter
 import com.example.gitusersearch.viewModel.SearchViewModel

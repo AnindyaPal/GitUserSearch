@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gitusersearch.ContentProviders.MySuggestionProvider
 import com.example.gitusersearch.R
 import com.example.gitusersearch.Utils
-import com.example.gitusersearch.di.DaggerSearchActivityComponent
-import com.example.gitusersearch.di.SeachActivityModule
+import com.example.gitusersearch.di.activity.DaggerSearchActivityComponent
+import com.example.gitusersearch.di.activity.SeachActivityModule
 import com.example.gitusersearch.ui.adapters.RvRepositoryAdapter
 import com.example.gitusersearch.viewModel.SearchViewModel
 import com.google.android.material.snackbar.Snackbar
