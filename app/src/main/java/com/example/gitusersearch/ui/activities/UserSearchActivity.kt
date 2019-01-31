@@ -9,14 +9,18 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gitusersearch.ContentProviders.MySuggestionProvider
 import com.example.gitusersearch.R
+import com.example.gitusersearch.Utils
 import com.example.gitusersearch.di.DaggerSearchActivityComponent
 import com.example.gitusersearch.di.SeachActivityModule
 import com.example.gitusersearch.ui.adapters.RvRepositoryAdapter
 import com.example.gitusersearch.viewModel.SearchViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -54,8 +58,15 @@ class UserSearchActivity : AppCompatActivity() {
                 if (fullNameRepoList != null) {
                     rvRepositoryAdapter.setData(fullNameRepoList.repoList) // adapter set
                     val user = fullNameRepoList.user // setting user details
-                    tvUserName.text = user.name
-                    tvEmail.text = user.email
+                    tvUserName.text = user.login
+
+                    if (user.email.toString() == "null") {
+                        tvEmail.text = "Email not provided"
+                    }
+                    else {
+                        tvEmail.text = user.email
+                    }
+
                     tvName.text = user.name
                 }
                 else {
@@ -66,11 +77,11 @@ class UserSearchActivity : AppCompatActivity() {
         } )
     }
 
-    fun showProgressBar(){
+    private fun showProgressBar(){
         progressBar.visibility = View.VISIBLE
     }
 
-    fun hideProgressBar() {
+    private fun hideProgressBar() {
         progressBar.visibility = View.GONE
     }
 
@@ -80,7 +91,8 @@ class UserSearchActivity : AppCompatActivity() {
                 SearchRecentSuggestions(this, MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE)
                     .saveRecentQuery(query, null)
                 showProgressBar()
-                searchViewModel.performUserSearch(query = query)
+                rvRepositoryAdapter.setData(mutableListOf())
+                networkCheckAndProcess(query)
             }
         }
     }
@@ -95,5 +107,23 @@ class UserSearchActivity : AppCompatActivity() {
             R.id.actionSearch -> onSearchRequested()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    private fun showSnackbar(query: String) {
+        val snackbar = Snackbar.make(vRoot, "Please check internet connection" , Snackbar.LENGTH_INDEFINITE )
+        snackbar.setAction("RETRY") { networkCheckAndProcess(query) }
+        snackbar.setActionTextColor(ResourcesCompat.getColor(resources, R.color.colorAccent, null))
+        snackbar.setActionTextColor(ContextCompat.getColor(this@UserSearchActivity,R.color.colorAccent))
+        snackbar.show()
+    }
+
+    private fun networkCheckAndProcess(query : String) {
+        if (Utils.isNetworkAvailable(this@UserSearchActivity)) {
+            showProgressBar()
+            searchViewModel.performUserSearch(query)
+        } else {
+            showSnackbar(query)
+        }
     }
 }
