@@ -1,25 +1,33 @@
 package com.example.gitusersearch.di
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gitusersearch.ui.activities.UserSearchActivity
 import com.example.gitusersearch.ui.adapters.RvRepositoryAdapter
+import com.example.gitusersearch.viewModel.SearchViewModel
 import dagger.Module
 import dagger.Provides
 
 @Module
-class SeachActivityModule(val context: Context){
+class SeachActivityModule(val activity: UserSearchActivity){
     @Provides
-    fun getActivityContext(): Context{
-        return context
+    fun getActivityContext(): UserSearchActivity{
+        return activity
     }
 
     @Provides
-    fun getLayoutManager(context: Context): LinearLayoutManager {
-        return LinearLayoutManager(context)
+    fun getLayoutManager(activity: UserSearchActivity): LinearLayoutManager {
+        return LinearLayoutManager(activity)
     }
 
     @Provides
-    fun getRvRepositoryAdapter(context: Context) : RvRepositoryAdapter {
-        return RvRepositoryAdapter(context)
+    fun getRvRepositoryAdapter(activity: UserSearchActivity) : RvRepositoryAdapter {
+        return RvRepositoryAdapter(activity)
+    }
+
+    @Provides
+    fun getSearchViewModel(activity: UserSearchActivity) : SearchViewModel {
+        return ViewModelProviders.of(activity).get(SearchViewModel::class.java)
     }
 }

@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gitusersearch.R
 import com.example.gitusersearch.SearchAppClass
 import com.example.gitusersearch.di.DaggerSearchActivityComponent
 import com.example.gitusersearch.di.SeachActivityModule
 import com.example.gitusersearch.ui.adapters.RvRepositoryAdapter
+import com.example.gitusersearch.viewModel.SearchViewModel
 import javax.inject.Inject
 
 
@@ -19,6 +21,8 @@ class UserSearchActivity : AppCompatActivity() {
     lateinit var rvRepositoryAdapter: RvRepositoryAdapter
     @Inject
     lateinit var layoutManager : LinearLayoutManager
+    @Inject
+    lateinit var searchViewModel : SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +37,7 @@ class UserSearchActivity : AppCompatActivity() {
     }
 
     private fun initMembers() {
-
+        
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
