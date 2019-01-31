@@ -51,6 +51,7 @@ class UserSearchActivity : AppCompatActivity() {
                 SearchRecentSuggestions(this, MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE)
                     .saveRecentQuery(query, null)
             }
+
         }
         super.onNewIntent(intent)
     }
