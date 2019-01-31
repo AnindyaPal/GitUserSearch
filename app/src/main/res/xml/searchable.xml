@@ -5,5 +5,7 @@
             android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
             android:searchSuggestAuthority="com.example.MySuggestionProvider"
             android:searchSuggestSelection=" ?"
+            android:searchMode="queryRewriteFromText"
+            android:searchButtonText="@string/search_hint"
 >
 </searchable>

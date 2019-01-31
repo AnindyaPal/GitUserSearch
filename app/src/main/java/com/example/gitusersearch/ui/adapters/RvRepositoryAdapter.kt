@@ -1,6 +1,5 @@
 package com.example.gitusersearch.ui.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +7,7 @@ import com.example.gitusersearch.R
 import com.example.gitusersearch.models.RepoModel
 import com.example.gitusersearch.ui.viewHolders.RepositoryViewHolder
 
-class RvRepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryViewHolder>() {
+class RvRepositoryAdapter : RecyclerView.Adapter<RepositoryViewHolder>() {
     val repositoriesList : MutableList<RepoModel> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryViewHolder {
         val layoutView = LayoutInflater.from(parent.context).inflate(R.layout.repo_item, parent, false)
@@ -29,6 +28,7 @@ class RvRepositoryAdapter(val context: Context) : RecyclerView.Adapter<Repositor
     }
 
     fun setData(repositories : List<RepoModel>) {
+        repositoriesList.clear()
         repositoriesList.addAll(repositories)
         notifyDataSetChanged()
     }

@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.provider.SearchRecentSuggestions
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gitusersearch.ContentProviders.MySuggestionProvider
 import com.example.gitusersearch.R
-import com.example.gitusersearch.SearchAppClass
 import com.example.gitusersearch.di.DaggerSearchActivityComponent
 import com.example.gitusersearch.di.SeachActivityModule
 import com.example.gitusersearch.ui.adapters.RvRepositoryAdapter
@@ -24,36 +24,54 @@ import javax.inject.Inject
 class UserSearchActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var rvRepositoryAdapter: RvRepositoryAdapter
+    internal lateinit var rvRepositoryAdapter: RvRepositoryAdapter
     @Inject
-    lateinit var layoutManager : LinearLayoutManager
+    internal lateinit var layoutManager : LinearLayoutManager
     @Inject
-    lateinit var searchViewModel : SearchViewModel
+    internal lateinit var searchViewModel : SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         DaggerSearchActivityComponent.builder()
-            .appComponent(SearchAppClass.getAppInstance()?.getappComponent())
             .seachActivityModule(SeachActivityModule(this))
-            .build()
+            .build().injectSearchActivity(this)
 
         initMembers()
     }
 
     private fun initMembers() {
+
+        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL)
+
         rvRepositories.adapter = rvRepositoryAdapter
         rvRepositories.layoutManager = layoutManager
 
-        searchViewModel.repositoriesLiveData.observe(this, Observer {repositoryList ->
+        searchViewModel.repositoriesLiveData.observe(this, Observer {fullNameRepoList ->
             run {
-                if (repositoryList != null)
-                    rvRepositoryAdapter.setData(repositoryList)
-                else
-                    Toast.makeText(this, " Either there is not user/ user has no repositories", Toast.LENGTH_LONG).show()
+                hideProgressBar()
+                if (fullNameRepoList != null) {
+                    rvRepositoryAdapter.setData(fullNameRepoList.repoList) // adapter set
+                    val user = fullNameRepoList.user // setting user details
+                    tvUserName.text = user.name
+                    tvEmail.text = user.email
+                    tvName.text = user.name
+                }
+                else {
+                    rvRepositoryAdapter.setData(mutableListOf())
+                    Toast.makeText(this, " The user does not exist", Toast.LENGTH_LONG).show()
+                }
             }
         } )
+    }
+
+    fun showProgressBar(){
+        progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar() {
+        progressBar.visibility = View.GONE
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -61,10 +79,10 @@ class UserSearchActivity : AppCompatActivity() {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
                 SearchRecentSuggestions(this, MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE)
                     .saveRecentQuery(query, null)
+                showProgressBar()
                 searchViewModel.performUserSearch(query = query)
             }
         }
-        super.onNewIntent(intent)
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater

@@ -3,13 +3,12 @@ package com.example.gitusersearch.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.gitusersearch.SearchAppClass
-import com.example.gitusersearch.models.RepoModel
+import com.example.gitusersearch.models.NameAndRepo
 import com.example.gitusersearch.repository.GithubRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -25,7 +24,7 @@ class SearchViewModel : ViewModel(), CoroutineScope{
         SearchAppClass.getAppInstance()?.getappComponent()?.injectSearchViewModel(this)
     }
 
-    var repositoriesLiveData : MutableLiveData<List<RepoModel>> = MutableLiveData()
+    var repositoriesLiveData : MutableLiveData<NameAndRepo> = MutableLiveData()
 
     fun performUserSearch(query: String){
         launch { getRepoIfUserPresent(query) }
@@ -35,8 +34,9 @@ class SearchViewModel : ViewModel(), CoroutineScope{
         try {
             val user = gitHubRepo.getUserByName(query).await()
             val repositoryList = gitHubRepo.getRepositoriesByUser(query).await()
+            val nameAndRepo = NameAndRepo(user, repositoryList)
 
-            repositoriesLiveData.value = repositoryList
+            repositoriesLiveData.value = nameAndRepo
         } catch (e : Exception) {
             repositoriesLiveData.value = null
         }
