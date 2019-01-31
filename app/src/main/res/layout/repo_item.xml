@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="6dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvRepositoryName" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+        <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp" app:srcCompat="@mipmap/stars"
+                android:id="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/tvStars"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvStars" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp" app:layout_constraintTop_toTopOf="@+id/imageView"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"/>
+        <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp" app:srcCompat="@mipmap/forks"
+                android:id="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvForks" app:layout_constraintStart_toEndOf="@+id/imageView2"
+                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                app:layout_constraintTop_toTopOf="@+id/imageView2"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2" app:layout_constraintEnd_toStartOf="@+id/imageView"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"/>
+        <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp" app:srcCompat="@mipmap/code"
+                android:id="@+id/imageView3"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toStartOf="@+id/tvLanguage"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvLanguage" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp" app:layout_constraintTop_toTopOf="@+id/imageView3"
+                app:layout_constraintBottom_toTopOf="@+id/imageView"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
