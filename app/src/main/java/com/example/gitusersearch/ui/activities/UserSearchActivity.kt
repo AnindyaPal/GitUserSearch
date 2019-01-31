@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gitusersearch.R
 import com.example.gitusersearch.SearchAppClass
@@ -37,7 +36,7 @@ class UserSearchActivity : AppCompatActivity() {
     }
 
     private fun initMembers() {
-        
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
