@@ -9,13 +9,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class SearchViewModel : ViewModel(), CoroutineScope{
 
-    val job : Job = Job()
+    private val job : Job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
     @Inject
@@ -41,5 +40,10 @@ class SearchViewModel : ViewModel(), CoroutineScope{
         } catch (e : Exception) {
             repositoriesLiveData.value = null
         }
+    }
+
+    override fun onCleared() {
+        job.cancel()
+        super.onCleared()
     }
 }
