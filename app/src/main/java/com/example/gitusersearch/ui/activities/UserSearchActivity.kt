@@ -4,14 +4,36 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gitusersearch.R
+import com.example.gitusersearch.SearchAppClass
+import com.example.gitusersearch.di.DaggerSearchActivityComponent
+import com.example.gitusersearch.di.SeachActivityModule
+import com.example.gitusersearch.ui.adapters.RvRepositoryAdapter
+import javax.inject.Inject
 
 
 class UserSearchActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var rvRepositoryAdapter: RvRepositoryAdapter
+    @Inject
+    lateinit var layoutManager : LinearLayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        DaggerSearchActivityComponent.builder()
+            .appComponent(SearchAppClass.getAppInstance()?.getappComponent())
+            .seachActivityModule(SeachActivityModule(this))
+            .build()
+
+        initMembers()
+    }
+
+    private fun initMembers() {
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
